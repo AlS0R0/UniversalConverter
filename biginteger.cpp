@@ -6,6 +6,18 @@
 
 BigInteger::BigInteger() : digits_{0} {};
 
+BigInteger::BigInteger(int x)
+{
+    int rest;
+
+    while (x) {
+        rest = x % BASE;
+        digits_.push_back(rest);
+        x /= BASE;
+    }
+}
+
+
 BigInteger::BigInteger(int64_t x)
 {
     int rest;
@@ -310,6 +322,53 @@ BigInteger karatsuba(const BigInteger& lhs, const BigInteger& rhs)
     return BigInteger();
 }
 
+BigInteger& operator+=(BigInteger& lhs, const BigInteger& rhs)
+{
+    lhs = lhs + rhs;
+    return lhs;
+}
+
+BigInteger& operator+=(BigInteger& lhs, const int& rhs)
+{
+    lhs = lhs + rhs;
+    return lhs;
+}
+
+BigInteger& operator-=(BigInteger& lhs, const BigInteger& rhs)
+{
+    lhs = lhs - rhs;
+    return lhs;
+}
+
+BigInteger& operator-=(BigInteger& lhs, const int& rhs)
+{
+    lhs = lhs - rhs;
+    return lhs;
+}
+
+BigInteger& operator*=(BigInteger& lhs, const BigInteger& rhs)
+{
+    lhs = lhs * rhs;
+    return lhs;
+}
+
+BigInteger& operator*=(BigInteger& lhs, const int& rhs)
+{
+    lhs = lhs * rhs;
+    return lhs;
+}
+
+BigInteger& operator/=(BigInteger& lhs, const BigInteger& rhs)
+{
+    lhs = lhs / rhs;
+    return lhs;
+}
+
+BigInteger& operator/=(BigInteger& lhs, const int& rhs)
+{
+    lhs = lhs / rhs;
+    return lhs;
+}
 
 bool operator<(const BigInteger& lhs, const BigInteger& rhs)
 {
@@ -349,6 +408,67 @@ bool operator!=(const BigInteger& lhs, const BigInteger& rhs)
     return !(lhs == rhs);
 }
 
+bool operator<(const BigInteger& lhs, const int& rhs)
+{
+    return lhs < BigInteger(rhs);
+}
+
+bool operator<=(const BigInteger& lhs, const int& rhs)
+{
+    return lhs <= BigInteger(rhs);
+}
+
+bool operator>(const BigInteger& lhs, const int& rhs)
+{
+    return lhs > BigInteger(rhs);
+}
+
+bool operator>=(const BigInteger& lhs, const int& rhs)
+{
+    return lhs >= BigInteger(rhs);
+}
+
+bool operator==(const BigInteger& lhs, const int& rhs)
+{
+    return lhs == BigInteger(rhs);
+}
+
+bool operator!=(const BigInteger& lhs, const int& rhs)
+{
+    return lhs != BigInteger(rhs);
+}
+
+bool operator<(const int& lhs, const BigInteger& rhs)
+{
+    return rhs > lhs;
+}
+
+bool operator<=(const int& lhs, const BigInteger& rhs)
+{
+    return rhs >= lhs;
+}
+
+bool operator>(const int& lhs, const BigInteger& rhs)
+{
+    return rhs < lhs;
+}
+
+bool operator>=(const int& lhs, const BigInteger& rhs)
+{
+    return rhs <= lhs;
+}
+
+bool operator==(const int& lhs, const BigInteger& rhs)
+{
+    return rhs == lhs;
+}
+
+bool operator!=(const int& lhs, const BigInteger& rhs)
+{
+    return rhs != lhs;
+}
+
+
 std::ostream& operator<<(std::ostream& out, const BigInteger& num)
 {
     const std::vector<int>& digits = num.digits_;
@@ -365,4 +485,11 @@ std::ostream& operator<<(std::ostream& out, const BigInteger& num)
     }
 
     return out;
+}
+
+BigInteger& BigInteger::operator=(const BigInteger& integer)
+{
+    digits_ = integer.digits_;
+    normalize();
+    return *this;
 }

@@ -10,6 +10,7 @@ class BigInteger
 {
 public:
     BigInteger();
+    BigInteger(int x);
     BigInteger(unsigned long long x);
     BigInteger(int64_t x);
     BigInteger(const std::string& s);
@@ -43,14 +44,39 @@ public:
     friend BigInteger operator%(BigInteger lhs, const int& rhs);
     friend BigInteger karatsuba(const BigInteger& lhs, const BigInteger& rhs);
 
+    friend BigInteger& operator+=(BigInteger& lhs, const BigInteger& rhs);
+    friend BigInteger& operator+=(BigInteger& lhs, const int& rhs);
+    friend BigInteger& operator-=(BigInteger& lhs, const BigInteger& rhs);
+    friend BigInteger& operator-=(BigInteger& lhs, const int& rhs);
+    friend BigInteger& operator*=(BigInteger& lhs, const BigInteger& rhs);
+    friend BigInteger& operator*=(BigInteger& lhs, const int& rhs);
+    friend BigInteger& operator/=(BigInteger& lhs, const BigInteger& rhs);
+    friend BigInteger& operator/=(BigInteger& lhs, const int& rhs);
+
     friend bool operator<(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator<=(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator>(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator>=(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator==(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator!=(const BigInteger& lhs, const BigInteger& rhs);
+    
+    friend bool operator<(const BigInteger& lhs, const int& rhs);
+    friend bool operator<=(const BigInteger& lhs, const int& rhs);
+    friend bool operator>(const BigInteger& lhs, const int& rhs);
+    friend bool operator>=(const BigInteger& lhs, const int& rhs);
+    friend bool operator==(const BigInteger& lhs, const int& rhs);
+    friend bool operator!=(const BigInteger& lhs, const int& rhs);
+
+    friend bool operator<(const int& lhs, const BigInteger& rhs);
+    friend bool operator<=(const int& lhs, const BigInteger& rhs);
+    friend bool operator>(const int& lhs, const BigInteger& rhs);
+    friend bool operator>=(const int& lhs, const BigInteger& rhs);
+    friend bool operator==(const int& lhs, const BigInteger& rhs);
+    friend bool operator!=(const int& lhs, const BigInteger& rhs);
 
     friend std::ostream& operator<<(std::ostream& out, const BigInteger& num);
+
+    BigInteger& operator=(const BigInteger& integer);
 
 private:
 
