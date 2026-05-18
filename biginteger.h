@@ -6,6 +6,7 @@
 
 static const int BASE = 1000000000;
 
+
 class BigInteger
 {
 public:
@@ -77,7 +78,9 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const BigInteger& num);
 
     BigInteger& operator=(const BigInteger& integer);
+    BigInteger& operator=(const int& integer);
 
+    friend BigInteger gcd(const BigInteger& lhs, const BigInteger& rhs);
 private:
 
     std::vector<int> digits_;

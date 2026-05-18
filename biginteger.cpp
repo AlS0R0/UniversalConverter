@@ -78,7 +78,6 @@ void BigInteger::ConvertFromString(const std::string& s)
             digits_.push_back(std::stoi(s.substr(0, 9 + i)));
             break;
         }
-
         digits_.push_back(std::stoi(s.substr(i, 9)));
     }
 }
@@ -491,5 +490,11 @@ BigInteger& BigInteger::operator=(const BigInteger& integer)
 {
     digits_ = integer.digits_;
     normalize();
+    return *this;
+}
+
+BigInteger& BigInteger::operator=(const int& integer)
+{
+    *this = BigInteger(integer);
     return *this;
 }
