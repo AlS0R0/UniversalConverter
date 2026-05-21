@@ -16,7 +16,7 @@ public:
     BigInteger(int64_t x);
     BigInteger(const std::string& s);
 
-    std::string ConvertToString();
+    std::string ConvertToString() const;
     void ConvertFromString(const std::string& s);
     bool TestIfZero() const;
     friend BigInteger gcd(const BigInteger& lhs, const BigInteger& rhs);
@@ -26,7 +26,7 @@ public:
 
     void push_back(int x);
     void pop_back();
-    int back();
+    int back() const;
     void reserve(size_t x);
     void reverse();
     void resize(size_t size, int x);
@@ -60,7 +60,7 @@ public:
     friend bool operator>=(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator==(const BigInteger& lhs, const BigInteger& rhs);
     friend bool operator!=(const BigInteger& lhs, const BigInteger& rhs);
-    
+
     friend bool operator<(const BigInteger& lhs, const int& rhs);
     friend bool operator<=(const BigInteger& lhs, const int& rhs);
     friend bool operator>(const BigInteger& lhs, const int& rhs);

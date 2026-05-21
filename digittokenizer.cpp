@@ -67,7 +67,7 @@ bool DigitTokenizer::parseBracketDigit(int& value)
             error_ = "Значение цифры не может быть отрицательным";
             return false;
         }
-    } catch () {
+    } catch (...) {
         error_ = "Некорректное число в квадратных скобках";
         return false;
     }

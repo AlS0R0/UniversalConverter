@@ -40,6 +40,7 @@ BigFraction BaseParser::parse(const std::vector<DigitTokenizer::Token>& tokens,
     bool parenOpen = false;
 
     for (const auto& tok : tokens) {
+
         if (tok.type == 'd') {
             if (state == ST_INT) {
                 intDigits.push_back(tok.value);
@@ -48,12 +49,10 @@ BigFraction BaseParser::parse(const std::vector<DigitTokenizer::Token>& tokens,
             } else {
                 periodDigits.push_back(tok.value);
             }
-        }
-        else if (tok.type == '.') {
+        } else if (tok.type == '.') {
             dotSeen = true;
             state = ST_FRAC;
-        }
-        else if (tok.type == '(') {
+        } else if (tok.type == '(') {
             parenOpen = true;
             state = ST_PERIOD;
         }
@@ -67,6 +66,7 @@ BigFraction BaseParser::parse(const std::vector<DigitTokenizer::Token>& tokens,
     size_t m = periodDigits.size();
 
     if (m == 0) {
+
         if (k == 0) {
             return BigFraction(I, BigInteger(1));
         } else {
@@ -74,6 +74,7 @@ BigFraction BaseParser::parse(const std::vector<DigitTokenizer::Token>& tokens,
             BigInteger num = I * denom + F;
             return BigFraction(num, denom);
         }
+
     } else {
 
         BigInteger pow_p_k = powBase(p, k);

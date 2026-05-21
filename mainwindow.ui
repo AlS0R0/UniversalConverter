@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
-    <height>388</height>
+    <width>508</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,11 +19,21 @@
      <rect>
       <x>10</x>
       <y>79</y>
-      <width>331</width>
-      <height>161</height>
+      <width>491</width>
+      <height>311</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="inInt"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Вывод</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -45,17 +55,7 @@
       </spacer>
      </item>
      <item row="4" column="0">
-      <widget class="QLineEdit" name="outInt"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="inInt"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Вывод</string>
-       </property>
-      </widget>
+      <widget class="QTextEdit" name="outInt"/>
      </item>
     </layout>
    </widget>
@@ -64,7 +64,7 @@
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>331</width>
+      <width>491</width>
       <height>61</height>
      </rect>
     </property>
@@ -95,8 +95,8 @@
     <property name="geometry">
      <rect>
       <x>9</x>
-      <y>279</y>
-      <width>331</width>
+      <y>439</y>
+      <width>491</width>
       <height>31</height>
      </rect>
     </property>
@@ -110,13 +110,39 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="gridLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>399</y>
+      <width>491</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="openFile">
+       <property name="text">
+        <string>Открыть файл</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="saveToFile">
+       <property name="text">
+        <string>Записать в файл</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>349</width>
+     <width>508</width>
      <height>22</height>
     </rect>
    </property>

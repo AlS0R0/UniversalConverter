@@ -2,7 +2,6 @@
 #include "biginteger.h"
 #include <map>
 #include <algorithm>
-#include <sstream>
 
 static std::string digitToString(int d)
 {
@@ -25,13 +24,9 @@ static std::string formatIntegerPart(const BigInteger& intPart, int base)
     BigInteger n = intPart;
 
     while (!n.TestIfZero()) {
-
-        int digit = (n % base).ConvertToString()[0] - '0';
         BigInteger remBig = n % base;
-
         int digitVal = std::stoi(remBig.ConvertToString());
         digits.push_back(digitVal);
-
         n = n / base;
     }
 
@@ -55,7 +50,6 @@ std::string BaseFormatter::format(const BigFraction& fraction, int q,
     BigInteger remainder = fraction.num() % fraction.den();
 
     std::string intStr = formatIntegerPart(intPart, q);
-
     if (intStr.length() > MAX_OUTPUT_LENGTH) {
         truncated = true;
         truncationMsg = "Целая часть результата слишком длинная.";
@@ -69,11 +63,9 @@ std::string BaseFormatter::format(const BigFraction& fraction, int q,
     size_t remaining = MAX_OUTPUT_LENGTH - intStr.length() - 1;
 
     if (remaining == 0) {
-
         truncated = true;
         truncationMsg = "Полная запись результата слишком длинная. Показаны первые " +
                         std::to_string(MAX_OUTPUT_LENGTH) + " символов.";
-
         return intStr + ".";
     }
 
@@ -123,7 +115,6 @@ std::string BaseFormatter::format(const BigFraction& fraction, int q,
 
         if (digitStr.length() > remaining) {
             truncated = true;
-
             truncationMsg = "Полная запись результата слишком длинная. Показаны первые " +
                             std::to_string(MAX_OUTPUT_LENGTH) + " символов.";
 
@@ -151,12 +142,13 @@ std::string BaseFormatter::format(const BigFraction& fraction, int q,
         }
 
         if (result.length() > MAX_OUTPUT_LENGTH) {
+
             truncated = true;
             truncationMsg = "Полная запись результата слишком длинная. Показаны первые " +
                             std::to_string(MAX_OUTPUT_LENGTH) + " символов.";
+
             result = result.substr(0, MAX_OUTPUT_LENGTH) + "...";
         }
-
         return result;
 
     } else {
@@ -164,6 +156,7 @@ std::string BaseFormatter::format(const BigFraction& fraction, int q,
         truncated = true;
         truncationMsg = "Полная запись результата слишком длинная. Показаны первые " +
                         std::to_string(MAX_OUTPUT_LENGTH) + " символов.";
+
         std::string result = intStr + ".";
 
         for (int d : fracDigits) {

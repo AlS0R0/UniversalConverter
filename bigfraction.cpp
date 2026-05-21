@@ -7,7 +7,7 @@ BigInteger lcm(const BigInteger& first_number, const BigInteger& second_number) 
 
 void BigFraction::reduce() {
     if (den_ == BigInteger(0)) throw "Denominator is zero";
-    
+
     BigInteger gcd_ = gcd(num_, den_);
     num_ /= gcd_;
     den_ /= gcd_;
@@ -19,7 +19,7 @@ BigFraction::BigFraction() : num_(0), den_(1) {}
 
 BigFraction::BigFraction(const BigInteger& num) : num_(num), den_(1) {}
 
-BigFraction::BigFraction(const BigInteger& num, const BigInteger& den) 
+BigFraction::BigFraction(const BigInteger& num, const BigInteger& den)
     : num_(num), den_(den) {
 
     if (den_ == 0) throw "Denominator is zero";
@@ -40,7 +40,7 @@ BigFraction::BigFraction(const int& num) : num_(num), den_(1) {}
 
 // конструктор от BigFraction
 
-BigFraction::BigFraction(const BigFraction& other) : num_(other.num_), 
+BigFraction::BigFraction(const BigFraction& other) : num_(other.num_),
     den_(other.den_) {
     this->reduce();
 }
@@ -55,27 +55,28 @@ BigFraction::~BigFraction() {
 // оператор присваивания
 
 BigFraction& BigFraction::operator=(const BigFraction& fract) {
-    
+
     num_ = fract.num_;
     den_ = fract.den_;
     reduce();
-    
+
     return *this;
 }
 
 // арифметические операторы для BigFraction и BigFraction
 
 BigFraction operator+(BigFraction lhs, const BigFraction& rhs) {
-    
+
     BigInteger lcm_ = lcm(lhs.den_, rhs.den_);
     lhs.num_ = lhs.num_ * (lcm_ / lhs.den_) + rhs.num_ * (lcm_ / rhs.den_);
-    
+    lhs.den_ = lcm_;
+
     lhs.reduce();
     return lhs;
 }
 
 BigFraction operator-(BigFraction lhs, const BigFraction& rhs) {
-    
+
     BigInteger lcm_ = lcm(lhs.den_, rhs.den_);
     lhs.num_ = lhs.num_ * (lcm_ / lhs.den_) - rhs.num_ * (lcm_ / rhs.den_);
     lhs.den_ = lcm_;
@@ -85,7 +86,7 @@ BigFraction operator-(BigFraction lhs, const BigFraction& rhs) {
 }
 
 BigFraction operator*(BigFraction lhs, const BigFraction& rhs) {
-    
+
     lhs.num_ *= rhs.num_;
     lhs.den_ *= rhs.den_;
 
@@ -94,7 +95,7 @@ BigFraction operator*(BigFraction lhs, const BigFraction& rhs) {
 }
 
 BigFraction operator/(BigFraction lhs, const BigFraction& rhs) {
-    
+
     if (rhs.num_ == 0) {
         lhs.num_ = 0;
         lhs.den_ = 1;
@@ -112,7 +113,7 @@ BigFraction operator/(BigFraction lhs, const BigFraction& rhs) {
 // арифметические операторы для BigFraction и int
 
 BigFraction operator+(BigFraction lhs, const int& rhs) {
-    
+
     lhs.num_ += rhs * lhs.den_;
 
     lhs.reduce();
@@ -130,13 +131,13 @@ BigFraction operator+(const int& lhs, BigFraction rhs) {
 BigFraction operator-(BigFraction lhs, const int& rhs) {
 
     lhs.num_ -= rhs * lhs.den_;
-    
+
     lhs.reduce();
     return lhs;
 }
 
 BigFraction operator-(const int& lhs, BigFraction rhs) {
-    
+
     rhs.num_ = lhs * rhs.den_ - rhs.num_;
 
     rhs.reduce();
@@ -161,7 +162,7 @@ BigFraction operator*(const int& lhs, BigFraction rhs) {
 
 BigFraction operator/(BigFraction lhs, const int& rhs) {
 
-    lhs.den_ *= rhs;   
+    lhs.den_ *= rhs;
 
     lhs.reduce();
     return lhs;
@@ -174,7 +175,7 @@ BigFraction operator/(const int& lhs, BigFraction rhs) {
 // арифметические операторы для BigFraction и BigInteger
 
 BigFraction operator+(BigFraction lhs, const BigInteger& rhs) {
-    
+
     lhs.num_ += rhs * lhs.den_;
 
     lhs.reduce();
@@ -192,7 +193,7 @@ BigFraction operator+(const BigInteger& lhs, BigFraction rhs) {
 BigFraction operator-(BigFraction lhs, const BigInteger& rhs) {
 
     lhs.num_ -= rhs * lhs.den_;
-    
+
     lhs.reduce();
     return lhs;
 }
@@ -223,7 +224,7 @@ BigFraction operator*(const BigInteger& lhs, BigFraction rhs) {
 
 BigFraction operator/(BigFraction lhs, const BigInteger& rhs) {
 
-    lhs.den_ *= rhs;   
+    lhs.den_ *= rhs;
 
     lhs.reduce();
     return lhs;

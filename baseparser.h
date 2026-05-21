@@ -3,7 +3,6 @@
 
 #include "bigfraction.h"
 #include "digittokenizer.h"
-#include <string>
 #include <vector>
 
 class BaseParser
