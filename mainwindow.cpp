@@ -12,11 +12,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
+    // Создаём меню "File"
+    QMenu* fileMenu = menuBar()->addMenu(tr("&Universal Converter"));
     QAction* openAction = fileMenu->addAction(tr("&Open..."));
     QAction* saveAction = fileMenu->addAction(tr("&Save..."));
-    connect(openAction, &QAction::triggered, this, &MainWindow::on_actionOpen_triggered);
-    connect(saveAction, &QAction::triggered, this, &MainWindow::on_actionSave_triggered);
+
+    // Явные connect для пунктов меню
+    connect(openAction, &QAction::triggered, this, &MainWindow::actionOpen_triggered);
+    connect(saveAction, &QAction::triggered, this, &MainWindow::actionSave_triggered);
+
+    // Явные connect для кнопок на форме
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::pushButton_clicked);
+    connect(ui->openFile, &QPushButton::clicked, this, &MainWindow::openFile_clicked);
+    connect(ui->saveToFile, &QPushButton::clicked, this, &MainWindow::saveToFile_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +32,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+// Конвертация по кнопке "convert"
+void MainWindow::pushButton_clicked()
 {
     QString input = ui->inInt->text();
     QString pStr = ui->pLine->text();
@@ -54,7 +63,20 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
-void MainWindow::on_actionOpen_triggered()
+// Обработчик кнопки "Открыть файл"
+void MainWindow::openFile_clicked()
+{
+    actionOpen_triggered(); // вызываем логику из меню
+}
+
+// Обработчик кнопки "Записать в файл"
+void MainWindow::saveToFile_clicked()
+{
+    actionSave_triggered(); // вызываем логику из меню
+}
+
+// Загрузка из файла (меню)
+void MainWindow::actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Input File"), "",
                                                     tr("Text Files (*.txt);;All Files (*)"));
@@ -81,14 +103,19 @@ void MainWindow::on_actionOpen_triggered()
     ui->inInt->setText(input.trimmed());
 }
 
-void MainWindow::on_actionSave_triggered()
+// Сохранение результата в файл (меню)
+void MainWindow::actionSave_triggered()
 {
-    QString result = ui->outInt->text();
+    QString result = ui->outInt->toPlainText();
 
     if (result.isEmpty()) {
         QMessageBox::information(this, tr("Save"), tr("Nothing to save."));
         return;
     }
+
+    // Проверяем, было ли сообщение об обрезке результата
+    QString warning = statusBar()->currentMessage();
+    bool truncated = warning.contains("обрезана") || warning.contains("длинная");
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Result"), "",
                                                     tr("Text Files (*.txt);;All Files (*)"));
@@ -102,8 +129,14 @@ void MainWindow::on_actionSave_triggered()
 
     QTextStream out(&file);
     out << result;
+    if (truncated && !warning.isEmpty()) {
+        out << "\n\n" << warning;
+    }
+
+    QMessageBox::information(this, tr("Save"), tr("Result saved."));
 }
 
+// Отображение ошибки
 void MainWindow::showError(const QString& msg)
 {
     ui->outInt->clear();
@@ -111,9 +144,10 @@ void MainWindow::showError(const QString& msg)
     QMessageBox::warning(this, tr("Conversion Error"), msg);
 }
 
+// Отображение результата (с возможным предупреждением)
 void MainWindow::showResult(const QString& result, const QString& warning)
 {
-    ui->outInt->setText(result);
+    ui->outInt->setPlainText(result);
 
     if (!warning.isEmpty()) {
         statusBar()->showMessage(warning, 10000);

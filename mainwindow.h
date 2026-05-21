@@ -16,9 +16,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
-    void on_actionOpen_triggered();
-    void on_actionSave_triggered();
+    void pushButton_clicked();
+    void openFile_clicked();      // для кнопки "Открыть файл"
+    void saveToFile_clicked();    // для кнопки "Записать в файл"
+    void actionOpen_triggered();  // для пункта меню File → Open
+    void actionSave_triggered();  // для пункта меню File → Save
 
 private:
     Ui::MainWindow *ui;
